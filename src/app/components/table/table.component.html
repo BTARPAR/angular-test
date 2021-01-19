@@ -1,0 +1,20 @@
+<mat-form-field>
+  <mat-label>Filter by name</mat-label>
+  <input matInput (keyup)="inputFilter($event)" placeholder="Ex. Pilot" #input>
+</mat-form-field>
+<mat-table cdkDropList cdkDropListOrientation="horizontal"
+           (cdkDropListDropped)="drop($event)" [dataSource]="data"
+           class="mat-elevation-z8">
+
+  <ng-container *ngFor="let column of columns;" [matColumnDef]="column.name">
+
+    <mat-header-cell *matHeaderCellDef cdkDrag cdkDragLockAxis="x" (click)="applyFilter($event)" [attr.dataType]="column.name">{{ column.title }}</mat-header-cell>
+    <div *ngIf="column.name !== 'airstamp'"><mat-cell *matCellDef="let element">{{ element[column.name] | conditionalTitleCase: column.name }}</mat-cell></div>
+    <div *ngIf="column.name === 'airstamp'"><mat-cell *matCellDef="let element">{{ element[column.name] | date: 'mediumDate' }}</mat-cell></div>
+
+  </ng-container>
+
+  <mat-header-row mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;">
+  </mat-row>
+</mat-table>
