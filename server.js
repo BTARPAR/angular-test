@@ -5,7 +5,7 @@ const app = express()
 const PORT = process.env.PORT || 4000
 
 app.get(express.static(__dirname + '/dist/angular-test/'))
-app.get('/*', (req, res) => {
+app.get('*', (req, res) => {
   res.sendFile((path.join(__dirname + '/dist/angular-test/index.html')))
 })
 
